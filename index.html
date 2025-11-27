@@ -3,129 +3,106 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ChicBaby - Produtos para Bebês</title>
+    <title>ChicBaby - Chá de Bebê</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f7f7f7;
-            color: #333;
-        }
-        header {
-            background: #ffd4e5;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        header h1 {
-            margin: 0;
-            font-size: 26px;
-        }
-        nav a {
-            margin: 0 12px;
-            color: #333;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .hero {
-            text-align: center;
-            padding: 70px 20px;
-            background: #ffe8f0;
-        }
-        .hero h2 {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        .hero p {
-            font-size: 18px;
-        }
-        .produtos {
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            padding-top: 20px;
-        }
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-        }
-        .card img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 10px 16px;
-            background: #ff7eb5;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-        }
-        footer {
-            background: #ffd4e5;
-            padding: 20px;
-            text-align: center;
-            margin-top: 40px;
-        }
+        body { margin: 0; font-family: Arial, sans-serif; background: #f8f5f7; }
+        header { background: #ffcee0; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav a { margin: 0 10px; text-decoration: none; color: #333; font-weight: bold; }
+        .hero { text-align: center; padding: 60px 20px; background: #fff1f6; }
+        .filters { display: flex; justify-content: center; gap: 15px; padding: 20px; }
+        select, input { padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
+        .produtos { padding: 40px 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+        .card img { width: 100%; border-radius: 10px; }
+        .btn { display: inline-block; margin-top: 10px; background: #ff7eb5; padding: 10px 15px; color: white; border-radius: 8px; text-decoration: none; }
+        footer { background: #ffcee0; padding: 20px; text-align: center; margin-top: 40px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>ChicBaby</h1>
+    <h1>ChicBaby - Chá de Bebê</h1>
     <nav>
         <a href="#home">Home</a>
+        <a href="#lista">Lista</a>
         <a href="#categorias">Categorias</a>
-        <a href="#blog">Blog</a>
-        <a href="#contato">Contato</a>
     </nav>
 </header>
 
 <section class="hero" id="home">
-    <h2>Bem-vindo à ChicBaby</h2>
-    <p>Os melhores produtos para bebês escolhidos com carinho para você.</p>
+    <h2>Bem-vindo ao Chá de Bebê da ChicBaby</h2>
+    <p>Encontre itens perfeitos para presentear o bebê!</p>
 </section>
 
-<section class="produtos" id="destaques">
-    <h2>Destaques da Semana</h2>
+<section class="filters">
+    <input type="text" id="search" placeholder="Pesquisar produtos..." oninput="filterProducts()" />
+    <select id="categoryFilter" onchange="filterProducts()">
+        <option value="all">Todas Categorias</option>
+        <option value="higiene">Higiene</option>
+        <option value="roupas">Roupas</option>
+        <option value="quarto">Quarto do Bebê</option>
+        <option value="alimentacao">Alimentação</option>
+    </select>
+</section>
 
-    <div class="grid">
-        <div class="card">
-            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_660771-MLA95695049146_102025-F.webp" alt="Fralda Pampers Premium Care Tamanho M 80 Unidades">
-            <h3>Fralda Pampers Premium Care Tamanho M 80 Unidades/h3>
-            <p>Fraldas que trará conforto, segurança e confiança ao nosso Bebê</p>
-            <a class="btn" href="https://mercadolivre.com/sec/1Bh2ncc">Ver Oferta</a>
+<section class="produtos" id="lista">
+    <h2>Lista de Presentes</h2>
+
+    <div class="grid" id="productGrid">
+
+        <div class="card" data-category="higiene" data-name="kit higiene premium">
+            <img src="https://via.placeholder.com/300x200" />
+            <h3>Kit Higiene Premium</h3>
+            <p>Ideal para o cuidado diário do bebê.</p>
+            <a class="btn" href="#">Ver Oferta</a>
         </div>
 
-        <div class="card">
-            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_809582-MLA96123118395_102025-F.webp" alt="Carrinho De Bebê Sprint Ii Com Bebê Conforto E Base - Kiddo">
-            <h3>Carrinho De Bebê Sprint Ii Com Bebê Conforto E Base - Kiddo</h3>
-            <p>Leve, seguro e perfeito para passeios.</p>
-            <a class="btn" href="https://mercadolivre.com/sec/26rQr5k">Ver Oferta</a>
+        <div class="card" data-category="roupas" data-name="body algodao bebe">
+            <img src="https://via.placeholder.com/300x200" />
+            <h3>Body de Algodão</h3>
+            <p>Confortável e perfeito para recém-nascidos.</p>
+            <a class="btn" href="#">Ver Oferta</a>
         </div>
 
-        <div class="card">
-            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_812513-MLB97108832336_112025-F-quarto-beb-berco-americano-marquesa-guarda-roupa-cmoda-uli.webp" alt="Quarto Bebê Berço Americano Marquesa Guarda Roupa Cômoda Uli">
-            <h3>Quarto Bebê Berço Americano Marquesa Guarda Roupa Cômoda Uli</h3>
-            <p>Quarto completo, perfeito para o conforto do nosso Bebê.</p>
-            <a class="btn" href="https://mercadolivre.com/sec/1VrAp84" target="_blank">Ver Oferta</a>
+        <div class="card" data-category="alimentacao" data-name="mamadeira anti colica">
+            <img src="https://via.placeholder.com/300x200" />
+            <h3>Mamadeira Anticólica</h3>
+            <p>Ajuda a reduzir gases e desconfortos.</p>
+            <a class="btn" href="#">Ver Oferta</a>
+        </div>
+
+        <div class="card" data-category="quarto" data-name="berco portatil viagem">
+            <img src="https://via.placeholder.com/300x200" />
+            <h3>Berço Portátil</h3>
+            <p>Ótimo para viagens e espaços pequenos.</p>
+            <a class="btn" href="#">Ver Oferta</a>
         </div>
 
     </div>
 </section>
 
 <footer>
-    <p>© 2025 ChicBaby – Conteúdo com links de afiliado.</p>
+    <p>© 2025 ChicBaby - Chá de Bebê</p>
 </footer>
+
+<script>
+function filterProducts() {
+    const search = document.getElementById("search").value.toLowerCase();
+    const category = document.getElementById("categoryFilter").value;
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        const name = card.getAttribute("data-name");
+        const cat = card.getAttribute("data-category");
+
+        const matchName = name.includes(search);
+        const matchCategory = category === "all" || cat === category;
+
+        card.style.display = matchName && matchCategory ? "block" : "none";
+    });
+}
+</script>
 
 </body>
 </html>
