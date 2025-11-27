@@ -34,6 +34,9 @@
       if (produto) nomeProduto.innerText = produto;
     }
     function enviarMensagem() {
+      const params = new URLSearchParams(window.location.search);
+      const produto = params.get("produto");
+    
       const nome = document.getElementById("nome").value.trim();
       const mensagem = document.getElementById("mensagem").value.trim();
     
@@ -42,11 +45,19 @@
         return;
       }
     
-      // Aqui futuramente enviaremos para o Google Sheets.
-      // Por enquanto, só confirmamos visualmente:
+      fetch("https://script.google.com/macros/s/AKfycbwhVdSqF769s4maVCUlyZfQ46bx44ayYyz4LLW9F_T_224cfjzi1Du6fRLsHIS16Yg0/exec", {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({
+          produto: produto,
+          nome: nome,
+          mensagem: mensagem
+        })
+      });
+    
       alert("Mensagem enviada com sucesso! Obrigado 💕");
     
-      // Voltar para a página inicial
+      // Volta para a home
       window.location.href = "index.html";
     }
   </script>
