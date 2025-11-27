@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChicBaby - Produtos para Bebês</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f7;
+            color: #333;
+        }
+        header {
+            background: #ffd4e5;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+        nav a {
+            margin: 0 12px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .hero {
+            text-align: center;
+            padding: 70px 20px;
+            background: #ffe8f0;
+        }
+        .hero h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 18px;
+        }
+        .produtos {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            padding-top: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 16px;
+            background: #ff7eb5;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+        footer {
+            background: #ffd4e5;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>ChicBaby</h1>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#categorias">Categorias</a>
+        <a href="#blog">Blog</a>
+        <a href="#contato">Contato</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h2>Bem-vindo à ChicBaby</h2>
+    <p>Os melhores produtos para bebês escolhidos com carinho para você.</p>
+</section>
+
+<section class="produtos" id="destaques">
+    <h2>Destaques da Semana</h2>
+
+    <div class="grid">
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="Produto ChicBaby">
+            <h3>Kit Higiene Premium</h3>
+            <p>Completo, prático e com design encantador.</p>
+            <a class="btn" href="#">Ver Oferta</a>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="Carrinho de Bebê ChicBaby">
+            <h3>Carrinho Ultraconfort</h3>
+            <p>Leve, seguro e perfeito para passeios.</p>
+            <a class="btn" href="#">Ver Oferta</a>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="Berço Portátil ChicBaby">
+            <h3>Berço Portátil ChicTravel</h3>
+            <p>Ideal para viagens e pequenos espaços.</p>
+            <a class="btn" href="#">Ver Oferta</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 ChicBaby – Conteúdo com links de afiliado.</p>
+</footer>
+
+</body>
+</html>
