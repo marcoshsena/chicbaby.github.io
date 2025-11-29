@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - ChicBaby</title>
+
+<style>
+  body { background:#f8f5f7; font-family:Arial; margin:0; }
+
+  header {
+    background:#ffcee0; padding:20px; text-align:center;
+    font-size:24px; font-weight:bold;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  #loginBox {
+    max-width:400px; margin:50px auto; background:white;
+    padding:30px; border-radius:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1); text-align:center;
+  }
+
+  input {
+    width:100%; padding:12px; margin:10px 0;
+    border-radius:10px; border:1px solid #ccc; font-size:16px;
+  }
+
+  button {
+    padding:12px 20px; border:none; border-radius:10px;
+    cursor:pointer; background:#ffcce0; font-size:16px;
+  }
+
+  #painel {
+    display:none;
+    padding:20px; max-width:1000px; margin:auto;
+  }
+
+  table {
+    width:100%; border-collapse:collapse; margin-top:20px;
+    background:white; border-radius:12px;
+    overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  th, td {
+    padding:12px; border-bottom:1px solid #ddd;
+    text-align:left;
+  }
+
+  th { background:#ffe3ef; }
+</style>
+
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbwhVdSqF769s4maVCUlyZfQ46bx44ayYyz4LLW9F_T_224cfjzi1Du6fRLsHIS16Yg0/exec";
+
+  function login() {
+    const senha = document.getElementById("senha").value;
+
+    if (senha === "chicbaby123") {  // você pode trocar a senha aqui
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("painel").style.display = "block";
+      carregarMensagens();
+    } else {
+      alert("Senha incorreta.");
+    }
+  }
+
+  async function carregarMensagens() {
+    const resposta = await fetch(API_URL);
+    const dados = await resposta.json();
+
+    const tabela = document.getElementById("tabela");
+
+    tabela.innerHTML = `
+      <tr>
+        <th>Data</th>
+        <th>Produto</th>
+        <th>Nome</th>
+        <th>Mensagem</th>
+      </tr>
+    `;
+
+    dados.forEach(linha => {
+      tabela.innerHTML += `
+        <tr>
+          <td>${new Date(linha.timestamp).toLocaleString()}</td>
+          <td>${linha.produto}</td>
+          <td>${linha.nome}</td>
+          <td>${linha.mensagem}</td>
+        </tr>
+      `;
+    });
+  }
+</script>
+
+</head>
+<body>
+
+<header>Painel Administrativo - ChicBaby</header>
+
+<div id="loginBox">
+  <h2>Login do Administrador</h2>
+  <input type="password" id="senha" placeholder="Digite a senha">
+  <button onclick="login()">Entrar</button>
+</div>
+
+<div id="painel">
+  <h2>Mensagens Enviadas</h2>
+  <table id="tabela"></table>
+</div>
+
+</body>
+</html>
