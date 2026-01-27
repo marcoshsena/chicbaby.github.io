@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Confirmação • Chá do Francisco</title>
   <link rel="stylesheet" href="assets/css/style.css">
-  
+  <script src="assets/js/main.js" defer></script>
 </head>
+
 <body>
 
   <header>
@@ -17,6 +18,7 @@
   <main>
     <section>
       <h2>💙 Confirmação do Presente</h2>
+
       <div class="grid">
         <div class="card">
           <h3>Você conseguiu realizar a compra?</h3>
@@ -27,11 +29,30 @@
             <button class="btn" onclick="respondeNao()">Não</button>
           </div>
 
-          <div class="form-msg" id="formMsg">
+          <!-- FORMULÁRIO -->
+          <div class="form-msg animar" id="formMsg" style="display:none;">
+            <input
+              type="text"
+              id="nomePessoa"
+              class="input input-grande"
+              placeholder="Seu nome"
+            />
+
+            <textarea
+              id="mensagemBebe"
+              class="input input-grande"
+              rows="4"
+              placeholder="Deixe uma mensagem para o Francisco 💌"
+            ></textarea>
+
+            <button class="btn" onclick="enviarMensagem()">Enviar mensagem</button>
           </div>
 
-          <div class="agradecimento" id="agradecimento">
+          <!-- AGRADECIMENTO -->
+          <div class="agradecimento" id="agradecimento" style="display:none;">
+            💙 Obrigado pelo carinho! Sua mensagem foi enviada com sucesso.
           </div>
+
         </div>
       </div>
     </section>
@@ -41,36 +62,5 @@
     <p>Chá de Bebê do Francisco • Feito com amor</p>
   </footer>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const nomeProduto = params.get('nome');
-
-    if (nomeProduto) {
-      document.getElementById('produtoNome').innerText = nomeProduto;
-    }
-
-    function respondeSim() {
-      document.getElementById('formMsg').style.display = 'block';
-    }
-
-    function respondeNao() {
-      window.location.href = 'index.html';
-    }
-
-    function enviarMensagem() {
-      const nome = document.getElementById('nomePessoa').value.trim();
-      const msg = document.getElementById('mensagemBebe').value.trim();
-
-      if (!nome || !msg) {
-        alert('Por favor, preencha seu nome e a mensagem.');
-        return;
-      }
-
-      document.getElementById('formMsg').style.display = 'none';
-      document.getElementById('agradecimento').style.display = 'block';
-    }
-  </script>
-
 </body>
-</html>
 </html>
