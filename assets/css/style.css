@@ -126,3 +126,22 @@ footer {
     font-size: 2rem;
   }
 }
+
+/* Inputs maiores – página de confirmação */
+.input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.input-grande {
+  min-height: 52px;
+}
+
+textarea.input-grande {
+  min-height: 120px;
+  resize: vertical;
+}
