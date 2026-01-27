@@ -162,3 +162,30 @@ textarea.input-grande {
   align-self: center;
   margin-top: 10px;
 }
+
+/* ===== ANIMAÇÕES ===== */
+
+/* Estado inicial escondido */
+.animar {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+/* Quando aparece */
+.animar.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Agradecimento com zoom suave */
+.agradecimento {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.4s ease;
+}
+
+.agradecimento.show {
+  opacity: 1;
+  transform: scale(1);
+}
