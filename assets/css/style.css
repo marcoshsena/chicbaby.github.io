@@ -127,21 +127,38 @@ footer {
   }
 }
 
-/* Inputs maiores – página de confirmação */
+/* Formulário da página de confirmação */
+.form-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* Inputs padrão do site */
 .input {
   width: 100%;
-  padding: 14px;
-  border-radius: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
   border: 1px solid #ccc;
   font-family: inherit;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
+/* Campo nome */
 .input-grande {
-  min-height: 52px;
+  min-height: 50px;
 }
 
+/* Campo mensagem */
 textarea.input-grande {
-  min-height: 120px;
+  min-height: 140px;
   resize: vertical;
+}
+
+/* Botão enviar alinhado */
+.form-msg .btn {
+  align-self: center;
+  margin-top: 10px;
 }
