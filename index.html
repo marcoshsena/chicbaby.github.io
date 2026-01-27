@@ -79,15 +79,20 @@
       font-size: 0.9rem;
     }
 
-    .card a {
-      display: inline-block;
+    .progress {
+      width: 100%;
+      height: 14px;
+      background: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
       margin-top: 10px;
-      padding: 10px 18px;
-      background: var(--primary);
-      color: white;
-      text-decoration: none;
-      border-radius: 25px;
-      transition: 0.3s;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.4s ease;
     }
 
     .card a:hover {
@@ -117,28 +122,37 @@
   <main>
 
     <section>
-      <h2>🎁 Sugestões de Presentes</h2>
+      <h2>🎁 Fraldas do Francisco</h2>
       <div class="grid">
 
-        <div class="card">
-          <img src="https://via.placeholder.com/400x300?text=Fraldas" alt="Fraldas">
-          <h3>Kit de Fraldas</h3>
-          <p>Essenciais para o dia a dia do Francisco.</p>
-          <a href="#" target="_blank">Ver presente</a>
+        <div class="card" data-total="100" data-current="0">
+          <h3>Fraldas Tamanho: RN</h3>
+          <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
+          <div class="progress"><div class="progress-bar"></div></div>
         </div>
 
-        <div class="card">
-          <img src="https://via.placeholder.com/400x300?text=Roupinhas" alt="Roupinhas">
-          <h3>Roupinhas de Bebê</h3>
-          <p>Conforto e fofura para os primeiros meses.</p>
-          <a href="#" target="_blank">Ver presente</a>
+        <div class="card" data-total="100" data-current="0">
+          <h3>Fraldas Tamanho: P</h3>
+          <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
+          <div class="progress"><div class="progress-bar"></div></div>
         </div>
 
-        <div class="card">
-          <img src="https://via.placeholder.com/400x300?text=Higiene" alt="Higiene">
-          <h3>Kit Higiene</h3>
-          <p>Cuidado e carinho todos os dias.</p>
-          <a href="#" target="_blank">Ver presente</a>
+        <div class="card" data-total="100" data-current="0">
+          <h3>Fraldas Tamanho: M</h3>
+          <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
+          <div class="progress"><div class="progress-bar"></div></div>
+        </div>
+
+        <div class="card" data-total="100" data-current="0">
+          <h3>Fraldas Tamanho: G</h3>
+          <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
+          <div class="progress"><div class="progress-bar"></div></div>
+        </div>
+
+        <div class="card" data-total="100" data-current="0">
+          <h3>Fraldas Tamanho: GG</h3>
+          <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
+          <div class="progress"><div class="progress-bar"></div></div>
         </div>
 
       </div>
@@ -174,6 +188,16 @@
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       countdownEl.innerText = `Faltam ${days} dias para o chá!`;
     }, 1000);
+
+    // Atualiza barras de progresso
+    document.querySelectorAll('.card').forEach(card => {
+      const total = parseInt(card.dataset.total);
+      let current = parseInt(card.dataset.current);
+
+      const percent = Math.min((current / total) * 100, 100);
+      card.querySelector('.progress-bar').style.width = percent + '%';
+      card.querySelector('.current').innerText = current;
+    });
   </script>
 
 </body>
