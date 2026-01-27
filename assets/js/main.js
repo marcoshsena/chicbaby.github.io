@@ -46,3 +46,7 @@ function enviarMensagem() {
     }, 10);
   }, 300);
 }
+
+function voltarInicio() {
+  window.location.href = 'index.html';
+}
