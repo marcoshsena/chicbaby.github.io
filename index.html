@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chá de Bebê do Francisco</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
 </head>
+
 <body>
 
   <header>
@@ -18,46 +20,52 @@
 
     <section>
       <h2>🎁 Fraldas do Francisco</h2>
+
       <div class="grid">
 
         <div class="card" data-total="100" data-current="0">
           <h3>Fraldas Tamanho: RN</h3>
           <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
-          <div class="progress"><div class="progress-bar"></div></div>
+          <div class="progress">
+            <div class="progress-bar"></div>
+          </div>
           <a class="btn" href="fraldas.html?tamanho=RN">Ver ofertas</a>
-        </div></div>
         </div>
 
         <div class="card" data-total="100" data-current="0">
           <h3>Fraldas Tamanho: P</h3>
           <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
-          <div class="progress"><div class="progress-bar"></div></div>
+          <div class="progress">
+            <div class="progress-bar"></div>
+          </div>
           <a class="btn" href="fraldas.html?tamanho=P">Ver ofertas</a>
-        </div></div>
         </div>
 
         <div class="card" data-total="100" data-current="0">
           <h3>Fraldas Tamanho: M</h3>
           <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
-          <div class="progress"><div class="progress-bar"></div></div>
+          <div class="progress">
+            <div class="progress-bar"></div>
+          </div>
           <a class="btn" href="fraldas.html?tamanho=M">Ver ofertas</a>
-        </div></div>
         </div>
 
         <div class="card" data-total="100" data-current="0">
           <h3>Fraldas Tamanho: G</h3>
           <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
-          <div class="progress"><div class="progress-bar"></div></div>
+          <div class="progress">
+            <div class="progress-bar"></div>
+          </div>
           <a class="btn" href="fraldas.html?tamanho=G">Ver ofertas</a>
-        </div></div>
         </div>
 
         <div class="card" data-total="100" data-current="0">
           <h3>Fraldas Tamanho: GG</h3>
           <p>Quantidade arrecadada: <span class="current">0</span> / 100</p>
-          <div class="progress"><div class="progress-bar"></div></div>
+          <div class="progress">
+            <div class="progress-bar"></div>
+          </div>
           <a class="btn" href="fraldas.html?tamanho=GG">Ver ofertas</a>
-        </div></div>
         </div>
 
       </div>
@@ -66,7 +74,8 @@
     <section>
       <h2>💌 Mensagem</h2>
       <p style="text-align:center; max-width:700px; margin:auto;">
-        Sua presença é o nosso maior presente! Caso queira contribuir com algum item da lista, ficaremos muito felizes. 💕
+        Sua presença é o nosso maior presente! Caso queira contribuir com algum item da lista,
+        ficaremos muito felizes. 💕
       </p>
     </section>
 
@@ -75,35 +84,6 @@
   <footer>
     <p>Chá de Bebê do Francisco • Feito com carinho</p>
   </footer>
-
-  <script>
-    const eventDate = new Date("2026-03-15T15:00:00").getTime();
-    const countdownEl = document.getElementById("countdown");
-
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const diff = eventDate - now;
-
-      if (diff <= 0) {
-        countdownEl.innerText = "O grande dia chegou! 🎉";
-        clearInterval(timer);
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      countdownEl.innerText = `Faltam ${days} dias para o chá!`;
-    }, 1000);
-
-    // Atualiza barras de progresso
-    document.querySelectorAll('.card').forEach(card => {
-      const total = parseInt(card.dataset.total);
-      let current = parseInt(card.dataset.current);
-
-      const percent = Math.min((current / total) * 100, 100);
-      card.querySelector('.progress-bar').style.width = percent + '%';
-      card.querySelector('.current').innerText = current;
-    });
-  </script>
 
 </body>
 </html>
