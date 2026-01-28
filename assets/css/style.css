@@ -72,7 +72,7 @@ h2 {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 24px;
 }
 
 /* ==================================================
@@ -80,14 +80,23 @@ h2 {
 ================================================== */
 .card {
   background: var(--card);
-  border-radius: 16px;
-  padding: 15px;
+  border-radius: 18px;
+  padding: 20px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   text-align: center;
 }
 
+/* Cards padronizados das fraldas */
+.card-fralda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 360px;
+}
+
 .card h3 {
-  margin: 12px 0 6px;
+  margin: 10px 0;
 }
 
 .card p {
@@ -95,39 +104,20 @@ h2 {
 }
 
 /* ==================================================
-   CARDS COM IMAGEM / PRODUTO
+   IMAGENS DOS CARDS
 ================================================== */
-.card-produto {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-/* Área da imagem */
-/* Centraliza imagens nos cards do index */
 .card-imagem {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 15px auto;
+  min-height: 120px;
 }
 
 .card-imagem img {
   max-width: 120px;
   height: auto;
   display: block;
-}
-
-/* Conteúdo do card */
-.card-conteudo {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.card-conteudo h3 {
-  margin: 0;
 }
 
 /* ==================================================
@@ -149,46 +139,27 @@ h2 {
   transition: width 0.4s ease;
 }
 
-/* Variante de barra (produto) */
-.barra {
-  width: 100%;
-  height: 10px;
-  background: #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progresso {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #7bb7e0, #9cccf0);
-  transition: width 0.3s ease;
-}
-
 /* ==================================================
    BOTÕES
 ================================================== */
 .btn {
   display: inline-block;
-  margin-top: 12px;
-  padding: 10px 20px;
+  margin-top: 15px;
+  padding: 10px 22px;
   background: var(--primary);
   color: #fff;
   text-decoration: none;
   border-radius: 25px;
   font-size: 0.9rem;
+  transition: background 0.2s ease;
 }
 
 .btn:hover {
   background: #5aa3c8;
 }
 
-.card-conteudo .btn {
-  align-self: flex-start;
-}
-
 /* ==================================================
-   FORMULÁRIOS
+   FORMULÁRIOS (CONFIRMAÇÃO)
 ================================================== */
 .form-msg {
   display: flex;
@@ -217,23 +188,39 @@ textarea.input-grande {
 
 .form-msg .btn {
   align-self: center;
-  margin-top: 10px;
 }
 
 /* ==================================================
    ANIMAÇÕES
 ================================================== */
-.animar {
+.fade-bounce {
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.4s ease;
+  transform: translateY(20px) scale(0.95);
+  animation: fadeBounce 0.8s ease forwards;
 }
 
-.animar.show {
-  opacity: 1;
-  transform: translateY(0);
+.card:nth-child(1) .fade-bounce { animation-delay: 0.1s; }
+.card:nth-child(2) .fade-bounce { animation-delay: 0.2s; }
+.card:nth-child(3) .fade-bounce { animation-delay: 0.3s; }
+.card:nth-child(4) .fade-bounce { animation-delay: 0.4s; }
+.card:nth-child(5) .fade-bounce { animation-delay: 0.5s; }
+
+@keyframes fadeBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
+/* Agradecimento */
 .agradecimento {
   opacity: 0;
   transform: scale(0.95);
@@ -261,14 +248,5 @@ footer {
 @media (max-width: 600px) {
   header h1 {
     font-size: 2rem;
-  }
-
-  .card-produto {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .card-conteudo .btn {
-    align-self: center;
   }
 }
