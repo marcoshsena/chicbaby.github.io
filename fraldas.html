@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <script src="assets/js/main.js" defer></script>
 </head>
+
 <body>
 
   <header>
@@ -15,110 +16,118 @@
   </header>
 
   <main>
-
     <section>
       <h2>🧸 Fraldas Disponíveis</h2>
+
       <div class="grid">
 
         <!-- CARD 1 -->
-        <div class="card">
-          <h3>Pampers Premium Care</h3>
-          <p>Conforto e proteção para o bebê.</p>
+        <div class="card card-produto">
+          <div class="card-imagem">
+            <img src="assets/img/marcas/pampers.png" alt="Pampers">
+          </div>
 
-          <a class="btn" href="#"
-             onclick="comprarProduto(
-               'fralda-pampers',
-               'Fralda Pampers Premium Care',
-               'https://www.amazon.com.br/SEU-LINK-AFILIADO'
-             )">
-            Amazon
-          </a>
+          <div class="card-conteudo">
+            <h3>Pampers Premium Care</h3>
+            <p>Conforto e proteção para o bebê.</p>
 
-          <a class="btn" href="#"
-             onclick="comprarProduto(
-               'fralda-pampers',
-               'Fralda Pampers Premium Care',
-               'https://shopee.com.br/SEU-LINK-AFILIADO'
-             )">
-            Shopee
-          </a>
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  url: 'https://www.amazon.com.br/SEU-LINK-AFILIADO'
+                })">Amazon</button>
 
-          <a class="btn" href="#"
-             onclick="comprarProduto(
-               'fralda-pampers',
-               'Fralda Pampers Premium Care',
-               'https://mercadolivre.com.br/SEU-LINK-AFILIADO'
-             )">
-            Mercado Livre
-          </a>
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  url: 'https://shopee.com.br/SEU-LINK-AFILIADO'
+                })">Shopee</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  url: 'https://mercadolivre.com.br/SEU-LINK-AFILIADO'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
 
         <!-- CARD 2 -->
-        <div class="card">
-          <h3>Huggies Supreme Care</h3>
-          <p>Alta absorção e suavidade.</p>
+        <div class="card card-produto">
+          <div class="card-imagem">
+            <img src="assets/img/marcas/huggies.png" alt="Huggies">
+          </div>
 
-          <a class="btn" href="#"
-             onclick="comprarProduto(
-               'fralda-pampers',
-               'Fralda Pampers Premium Care',
-               'https://www.amazon.com.br/SEU-LINK-AFILIADO'
-             )">
-            Amazon
-          </a>
+          <div class="card-conteudo">
+            <h3>Huggies Supreme Care</h3>
+            <p>Alta absorção e suavidade.</p>
 
-          <a class="btn" href="#"
-             onclick="comprarProduto(
-               'fralda-pampers',
-               'Fralda Pampers Premium Care',
-               'https://shopee.com.br/SEU-LINK-AFILIADO'
-             )">
-            Shopee
-          </a>
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  url: 'https://www.amazon.com.br/SEU-LINK-AFILIADO'
+                })">Amazon</button>
 
-          <a class="btn" href="#"
-             onclick="comprarProduto(
-               'fralda-pampers',
-               'Fralda Pampers Premium Care',
-               'https://mercadolivre.com.br/SEU-LINK-AFILIADO'
-             )">
-            Mercado Livre
-          </a>
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  url: 'https://shopee.com.br/SEU-LINK-AFILIADO'
+                })">Shopee</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  url: 'https://mercadolivre.com.br/SEU-LINK-AFILIADO'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
 
         <!-- CARD 3 -->
-        <div class="card">
-          <h3>Cremer Baby</h3>
-          <p>Excelente custo-benefício.</p>
+        <div class="card card-produto">
+          <div class="card-imagem">
+            <img src="assets/img/marcas/cremer.png" alt="Cremer">
+          </div>
 
-          <a class="btn" href="#"
-             onclick="comprarProduto(
-               'fralda-pampers',
-               'Fralda Pampers Premium Care',
-               'https://www.amazon.com.br/SEU-LINK-AFILIADO'
-             )">
-            Amazon
-          </a>
+          <div class="card-conteudo">
+            <h3>Cremer Baby</h3>
+            <p>Excelente custo-benefício.</p>
 
-          <a class="btn" href="#"
-             onclick="comprarProduto(
-               'fralda-pampers',
-               'Fralda Pampers Premium Care',
-               'https://shopee.com.br/SEU-LINK-AFILIADO'
-             )">
-            Shopee
-          </a>
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-cremer',
+                  nome: 'Fralda Cremer Baby',
+                  url: 'https://www.amazon.com.br/SEU-LINK-AFILIADO'
+                })">Amazon</button>
 
-          <a class="btn" href="#"
-             onclick="comprarProduto(
-               'fralda-pampers',
-               'Fralda Pampers Premium Care',
-               'https://mercadolivre.com.br/SEU-LINK-AFILIADO'
-             )">
-            Mercado Livre
-          </a>
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-cremer',
+                  nome: 'Fralda Cremer Baby',
+                  url: 'https://shopee.com.br/SEU-LINK-AFILIADO'
+                })">Shopee</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-cremer',
+                  nome: 'Fralda Cremer Baby',
+                  url: 'https://mercadolivre.com.br/SEU-LINK-AFILIADO'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
 
       </div>
     </section>
-
   </main>
 
   <footer>
