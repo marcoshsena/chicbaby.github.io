@@ -1,24 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const MAX_POR_TAMANHO = 10; // ajuste se quiser
 
-  const progressoSalvo = JSON.parse(
+  const MAX_POR_TAMANHO = {
+    RN: 100,
+    P: 100,
+    M: 100,
+    G: 100,
+    GG: 100
+  };
+
+  const progresso = JSON.parse(
     localStorage.getItem('progressFraldas')
   ) || {};
 
   document.querySelectorAll('.progresso').forEach(barra => {
     const tamanho = barra.dataset.tamanho;
 
-    if (!tamanho) return;
+    if (!tamanho || !MAX_POR_TAMANHO[tamanho]) return;
 
-    const quantidade = progressoSalvo[tamanho] || 0;
-    const percentual = Math.min(
-      (quantidade / MAX_POR_TAMANHO) * 100,
-      100
-    );
+    const atual = progresso[tamanho] || 0;
+    const max = MAX_POR_TAMANHO[tamanho];
 
-    // pequeno delay para animar
-    setTimeout(() => {
-      barra.style.width = `${percentual}%`;
-    }, 200);
+    const percentual = Math.min((atual / max) * 100, 100);
+
+    // animação suave
+    requestAnimationFrame(() => {
+      barra.style.width = percentual + '%';
+    });
   });
+
 });
