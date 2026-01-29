@@ -9,7 +9,7 @@ function comprarProduto(produto) {
   window.open(url, '_blank', 'noopener,noreferrer');
 
   const confirmacaoUrl =
-    `confirmacao.html?id=${encodeURIComponent(id)}&nome=${encodeURIComponent(nome)}`;
+    `confirmacao.html?id=${encodeURIComponent(id)}&nome=${encodeURIComponent(nome)}&tamanho=${encodeURIComponent(tamanho)}`;
 
   window.location.href = confirmacaoUrl;
 }
