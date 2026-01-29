@@ -1,6 +1,13 @@
-function comprarProduto(id, nome, url) {
-  // 1. Abre o produto da loja em nova aba
-  window.open(undefined, '_blank')
+function comprarProduto(produto) {
+  const { id, nome, url } = produto;
+
+  if (!url) {
+    console.error('URL do produto não encontrada:', produto);
+    return;
+  }
+
+  // 1. Abre a loja em nova aba
+  window.open(url, '_blank', 'noopener,noreferrer');
 
   // 2. Redireciona para a página de confirmação
   const confirmacaoUrl =
