@@ -57,7 +57,8 @@ function registrarCompraFralda(tamanho) {
     GG: 0
   };
 
-  progresso[tamanho]++;
-
-  localStorage.setItem(key, JSON.stringify(progresso));
+  if (progresso[tamanho] !==  undefined){
+    progresso[tamanho]++;
+    localStorage.setItem(key, JSON.stringify(progresso));
+  }
 }
