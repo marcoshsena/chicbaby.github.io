@@ -1,18 +1,6 @@
 function comprarProduto(id, nome, url) {
   // 1. Abre o produto da loja em nova aba
-  document.querySelectorAll('.btn-comprar').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const url = btn.dataset.url;
-  
-      if (!url) {
-        console.error('URL não encontrada para o botão');
-        return;
-      }
-  
-      window.open(url, '_blank', 'noopener,noreferrer');
-    });
-  });
-
+  window.open(undefined, '_blank')
 
   // 2. Redireciona para a página de confirmação
   const confirmacaoUrl =
