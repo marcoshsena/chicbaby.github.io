@@ -20,6 +20,13 @@ function enviarMensagem() {
     return;
   }
 
+  const params = new URLSearchParams(window.location.search);
+  const tamanho = params.get('tamanho');
+
+  if (tamanho) {
+    registrarCompraFralda(tamanho);
+  }
+
   const form = document.getElementById('formMsg');
   const agradecimento = document.getElementById('agradecimento');
 
@@ -37,4 +44,20 @@ function enviarMensagem() {
 
 function voltarInicio() {
   window.location.href = 'index.html';
+}
+
+function registrarCompraFralda(tamanho) {
+  const key = 'progressFraldas';
+
+  const progresso = JSON.parse(localStorage.getItem(key)) || {
+    RN: 0,
+    P: 0,
+    M: 0,
+    G: 0,
+    GG: 0
+  };
+
+  progresso[tamanho]++;
+
+  localStorage.setItem(key, JSON.stringify(progresso));
 }
