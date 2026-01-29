@@ -12,17 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.getItem('progressFraldas')
   ) || {};
 
-  document.querySelectorAll('.progresso').forEach(barra => {
-    const tamanho = barra.dataset.tamanho;
-
-    if (!tamanho || !MAX_POR_TAMANHO[tamanho]) return;
-
+  document.querySelectorAll('.card[data-tipo="fralda"]').forEach(card => {
+    const tamanho = card.dataset.tamanho;
     const atual = progresso[tamanho] || 0;
     const max = MAX_POR_TAMANHO[tamanho];
 
+    // Atualiza texto "0 / 100"
+    const spanAtual = card.querySelector('.current');
+    if (spanAtual) {
+      spanAtual.innerText = atual;
+    }
+
+    // Atualiza barra
+    const barra = card.querySelector('.progresso');
+    if (!barra) return;
+
     const percentual = Math.min((atual / max) * 100, 100);
 
-    // animação suave
     requestAnimationFrame(() => {
       barra.style.width = percentual + '%';
     });
