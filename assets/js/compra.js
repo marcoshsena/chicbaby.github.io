@@ -9,7 +9,11 @@ function comprarProduto(produto) {
   window.open(url, '_blank', 'noopener,noreferrer');
 
   const confirmacaoUrl =
-    `confirmacao.html?id=${encodeURIComponent(id)}&nome=${encodeURIComponent(nome)}&tamanho=${encodeURIComponent(tamanho)}`;
+    `confirmacao.html?id=${encodeURIComponent(id)}&nome=${encodeURIComponent(nome)}`
+  
+  // só adiciona tamanho se existir fraldas
+  if (tamanho) {
+    confirmacaoUrl += `&tamanho=${encodeURIComponent(tamanho)}`;
 
   window.location.href = confirmacaoUrl;
 }
