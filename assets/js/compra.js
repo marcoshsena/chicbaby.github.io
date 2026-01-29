@@ -1,5 +1,5 @@
 function comprarProduto(produto) {
-  const { id, nome, url } = produto;
+  const { id, nome, url, tamanho } = produto;
 
   if (!url) {
     console.error('URL do produto não encontrada:', produto);
