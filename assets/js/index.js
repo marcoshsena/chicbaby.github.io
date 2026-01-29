@@ -4,35 +4,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = btn.closest('.card');
       const tipo = card.dataset.tipo;
 
+      // FRALDAS
       if (tipo === 'fralda') {
         const tamanho = card.dataset.tamanho;
         window.location.href = `fraldas.html?tamanho=${tamanho}`;
         return;
       }
 
+      // PRODUTO NORMAL
       if (tipo === 'produto') {
         const { id, nome, url } = card.dataset;
 
-        window.open(url, '_blank');
+        window.open(url, '_blank', 'noopener,noreferrer');
 
-        const confirmacaoUrl =
+        window.location.href =
           `confirmacao.html?id=${encodeURIComponent(id)}&nome=${encodeURIComponent(nome)}`;
-
-        window.location.href = confirmacaoUrl;
       }
     });
-  });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const progresso = JSON.parse(localStorage.getItem('progressFraldas')) || {};
-
-  document.querySelectorAll('.progress-bar').forEach(bar => {
-    const tamanho = bar.dataset.tamanho;
-    const atual = progresso[tamanho] || 0;
-    const meta = 10; // você define
-
-    const percentual = Math.min((atual / meta) * 100, 100);
-    bar.style.width = percentual + '%';
   });
 });
