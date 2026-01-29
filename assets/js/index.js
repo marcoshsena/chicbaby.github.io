@@ -23,3 +23,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const progresso = JSON.parse(localStorage.getItem('progressFraldas')) || {};
+
+  document.querySelectorAll('.progress-bar').forEach(bar => {
+    const tamanho = bar.dataset.tamanho;
+    const atual = progresso[tamanho] || 0;
+    const meta = 10; // você define
+
+    const percentual = Math.min((atual / meta) * 100, 100);
+    bar.style.width = percentual + '%';
+  });
+});
