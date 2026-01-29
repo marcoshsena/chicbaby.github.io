@@ -50,3 +50,39 @@ function enviarMensagem() {
 function voltarInicio() {
   window.location.href = 'index.html';
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  document.querySelectorAll('.btn-ver-ofertas').forEach(btn => {
+    btn.addEventListener('click', () => {
+
+      const card = btn.closest('.card');
+      const tipo = card.dataset.tipo;
+
+      // CAMINHO 1 — FRALDAS
+      if (tipo === 'fralda') {
+        const tamanho = card.dataset.tamanho;
+        window.location.href = `fraldas.html?tamanho=${tamanho}`;
+        return;
+      }
+
+      // CAMINHO 2 — PRODUTO DIRETO
+      if (tipo === 'produto') {
+        const id = card.dataset.id;
+        const nome = card.dataset.nome;
+        const url = card.dataset.url;
+
+        // Abre loja
+        window.open(url, '_blank');
+
+        // Redireciona para confirmação
+        const confirmacaoUrl =
+          `confirmacao.html?id=${encodeURIComponent(id)}&nome=${encodeURIComponent(nome)}`;
+
+        window.location.href = confirmacaoUrl;
+      }
+
+    });
+  });
+
+});
