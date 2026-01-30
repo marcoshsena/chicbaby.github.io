@@ -1,7 +1,3 @@
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-<script src="assets/js/firebase.js"></script>
-
 function respondeSim() {
   const form = document.getElementById('formMsg');
   form.style.display = 'flex';
@@ -15,7 +11,7 @@ function respondeNao() {
   window.location.href = 'index.html';
 }
 
-function enviarMensagem() {
+async function enviarMensagem() {
   const nome = document.getElementById('nomePessoa').value.trim();
   const msg = document.getElementById('mensagemBebe').value.trim();
 
@@ -26,11 +22,18 @@ function enviarMensagem() {
 
   const params = new URLSearchParams(window.location.search);
   const tamanho = params.get('tamanho');
+  const produto = params.get('nome') || 'Fralda';
 
   if (tamanho) {
-    registrarCompraFralda(tamanho);
+    await registrarCompraFralda({
+      tamanho,
+      nomePessoa: nome,
+      mensagem: msg,
+      produto
+    });
   }
 
+  // animação visual (mantida)
   const form = document.getElementById('formMsg');
   const agradecimento = document.getElementById('agradecimento');
 
@@ -50,19 +53,32 @@ function voltarInicio() {
   window.location.href = 'index.html';
 }
 
-function registrarCompraFralda(tamanho) {
-  const key = 'progressFraldas';
+/**
+ * 🔥 REGISTRA A COMPRA NO FIREBASE
+ */
+async function registrarCompraFralda({ tamanho, nomePessoa, mensagem, produto }) {
 
-  const progresso = JSON.parse(localStorage.getItem(key)) || {
-    RN: 0,
-    P: 0,
-    M: 0,
-    G: 0,
-    GG: 0
-  };
+  const refProgresso = db.collection('fraldas_progresso').doc(tamanho);
 
-  if (progresso[tamanho] !==  undefined){
-    progresso[tamanho]++;
-    localStorage.setItem(key, JSON.stringify(progresso));
-  }
+  // 🔐 transação segura (evita erro com múltiplos usuários)
+  await db.runTransaction(async (transaction) => {
+    const doc = await transaction.get(refProgresso);
+
+    const atual = doc.exists ? doc.data().quantidade : 0;
+
+    transaction.set(refProgresso, {
+      quantidade: atual + 1,
+      meta: 100
+    }, { merge: true });
+  });
+
+  // 📩 salva compra + mensagem
+  await db.collection('compras').add({
+    nomePessoa,
+    mensagem,
+    produto,
+    tamanho,
+    tipo: 'fralda',
+    data: firebase.firestore.FieldValue.serverTimestamp()
+  });
 }
