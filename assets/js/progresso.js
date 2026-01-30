@@ -1,7 +1,3 @@
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-<script src="assets/js/firebase.js"></script>
-
 document.addEventListener('DOMContentLoaded', () => {
 
   const MAX_POR_TAMANHO = {
@@ -12,30 +8,41 @@ document.addEventListener('DOMContentLoaded', () => {
     GG: 100
   };
 
-  const progresso = JSON.parse(
-    localStorage.getItem('progressFraldas')
-  ) || {};
+  // Escuta em tempo real o progresso das fraldas
+  db.collection('fraldas_progresso')
+    .onSnapshot(snapshot => {
 
-  document.querySelectorAll('.card[data-tipo="fralda"]').forEach(card => {
-    const tamanho = card.dataset.tamanho;
-    const atual = progresso[tamanho] || 0;
-    const max = MAX_POR_TAMANHO[tamanho];
+      snapshot.forEach(doc => {
+        const tamanho = doc.id;
+        const dados = doc.data();
+        const atual = dados.quantidade || 0;
+        const max = MAX_POR_TAMANHO[tamanho];
 
-    // Atualiza texto "0 / 100"
-    const spanAtual = card.querySelector('.current');
-    if (spanAtual) {
-      spanAtual.innerText = atual;
-    }
+        if (!max) return;
 
-    // Atualiza barra
-    const barra = card.querySelector('.progresso');
-    if (!barra) return;
+        // Card correspondente
+        const card = document.querySelector(
+          `.card[data-tipo="fralda"][data-tamanho="${tamanho}"]`
+        );
+        if (!card) return;
 
-    const percentual = Math.min((atual / max) * 100, 100);
+        // Texto "Quantidade arrecadada"
+        const spanAtual = card.querySelector('.current');
+        if (spanAtual) {
+          spanAtual.innerText = atual;
+        }
 
-    requestAnimationFrame(() => {
-      barra.style.width = percentual + '%';
+        // Barra animada
+        const barra = card.querySelector('.progresso');
+        if (!barra) return;
+
+        const percentual = Math.min((atual / max) * 100, 100);
+
+        requestAnimationFrame(() => {
+          barra.style.width = percentual + '%';
+        });
+      });
+
     });
-  });
 
 });
