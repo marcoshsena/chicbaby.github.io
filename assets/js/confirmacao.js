@@ -52,14 +52,15 @@ window.enviarMensagem = async function () {
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
 
-    // 🔒 Marca produto como reservado (se não for fralda)
+    // 🔹 Se for produto normal (não fralda)
     if (!tamanho && produtoId) {
       await db
         .collection('produtos_reservados')
         .doc(produtoId)
         .set({
+          reservado: true,
           nome: produtoNome,
-          reservadoEm: firebase.firestore.FieldValue.serverTimestamp()
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
     }
 
