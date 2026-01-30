@@ -75,3 +75,7 @@ window.enviarMensagem = async function () {
     alert('Erro ao enviar mensagem 😢');
   }
 };
+
+window.voltarInicio = function () {
+  window.location.href = 'index.html';
+};
