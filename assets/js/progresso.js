@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const MAX_POR_TAMANHO = {
-    RN: 100,
-    P: 100,
-    M: 100,
-    G: 100,
-    GG: 100
+    RN: 8,
+    P: 12,
+    M: 35,
+    G: 40,
+    GG: 30
   };
 
   // Escuta em tempo real o progresso das fraldas
