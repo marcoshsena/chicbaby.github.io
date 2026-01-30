@@ -22,16 +22,41 @@ async function enviarMensagem() {
 
   const params = new URLSearchParams(window.location.search);
   const tamanho = params.get('tamanho');
-  const produto = params.get('nome') || 'Fralda';
+  const produto = params.get('nome');
+  const produtoId = params.get('id');
 
+  // FRALDA
   if (tamanho) {
-    await registrarCompraFralda({
-      tamanho,
-      nomePessoa: nome,
+    const ref = db.collection('fraldas_progresso').doc(tamanho);
+
+    await ref.set({
+      quantidade: firebase.firestore.FieldValue.increment(1)
+    }, { merge: true });
+
+    await db.collection('mensagens').add({
+      nome,
       mensagem: msg,
-      produto
+      produto: `Fralda ${tamanho}`,
+      tipo: 'fralda',
+      criadoEm: firebase.firestore.FieldValue.serverTimestamp()
     });
   }
+
+  // PRODUTO NORMAL
+  if (produto && produtoId) {
+    await db.collection('compras').add({
+      nome,
+      mensagem: msg,
+      produto,
+      produtoId,
+      tipo: 'produto',
+      criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  }
+
+  mostrarAgradecimento();
+}
+
 
   // animação visual (mantida)
   const form = document.getElementById('formMsg');
