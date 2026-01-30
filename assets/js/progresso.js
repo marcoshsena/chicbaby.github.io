@@ -9,40 +9,32 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Escuta em tempo real o progresso das fraldas
-  db.collection('fraldas_progresso')
-    .onSnapshot(snapshot => {
+  document.querySelectorAll('.card[data-tipo="fralda"]').forEach(card => {
+    const tamanho = card.dataset.tamanho;
+    const max = MAX_POR_TAMANHO[tamanho];
 
-      snapshot.forEach(doc => {
-        const tamanho = doc.id;
-        const dados = doc.data();
-        const atual = dados.quantidade || 0;
-        const max = MAX_POR_TAMANHO[tamanho];
+    const spanAtual = card.querySelector('.current');
+    const barra = card.querySelector('.progresso');
 
-        if (!max) return;
+    if (!barra) return;
 
-        // Card correspondente
-        const card = document.querySelector(
-          `.card[data-tipo="fralda"][data-tamanho="${tamanho}"]`
-        );
-        if (!card) return;
+    // 🔥 Listener em tempo real no Firestore
+    db.collection('fraldas_progresso')
+      .doc(tamanho)
+      .onSnapshot(doc => {
 
-        // Texto "Quantidade arrecadada"
-        const spanAtual = card.querySelector('.current');
+        const atual = doc.exists ? doc.data().quantidade || 0 : 0;
+
+        // Atualiza texto
         if (spanAtual) {
           spanAtual.innerText = atual;
         }
 
-        // Barra animada
-        const barra = card.querySelector('.progresso');
-        if (!barra) return;
-
+        // Atualiza barra proporcional
         const percentual = Math.min((atual / max) * 100, 100);
 
-        requestAnimationFrame(() => {
-          barra.style.width = percentual + '%';
-        });
+        barra.style.width = percentual + '%';
       });
-
-    });
+  });
 
 });
