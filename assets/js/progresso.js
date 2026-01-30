@@ -11,16 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.card[data-tipo="fralda"]').forEach(card => {
     const tamanho = card.dataset.tamanho;
     const max = MAX_POR_TAMANHO[tamanho];
-
     if (!max) return;
 
     const spanAtual = card.querySelector('.current');
-    const spanMax = card.querySelector('.max'); // se existir
     const barra = card.querySelector('.progresso');
+    const botao = card.querySelector('.btn-ver-ofertas');
 
-    if (!barra) return;
-
-    // Listener em tempo real
     db.collection('fraldas_progresso')
       .doc(tamanho)
       .onSnapshot(doc => {
@@ -29,11 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Atualiza texto
         if (spanAtual) spanAtual.innerText = atual;
-        if (spanMax) spanMax.innerText = max;
 
         // Atualiza barra
         const percentual = Math.min((atual / max) * 100, 100);
         barra.style.width = percentual + '%';
+
+        // 🔒 BLOQUEIA SE ATINGIR O MÁXIMO
+        if (atual >= max) {
+          botao.disabled = true;
+          botao.innerText = 'Meta atingida 💙';
+          botao.style.background = '#ccc';
+          botao.style.cursor = 'not-allowed';
+        }
       });
   });
 
