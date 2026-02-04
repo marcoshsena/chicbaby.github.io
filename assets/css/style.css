@@ -362,33 +362,33 @@ footer {
   }
 }
 
-.tutorial-presente {
+.endereco-entrega {
   max-width: 900px;
-  margin: 60px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  margin: 40px auto;
+  padding: 30px 20px;
+  text-align: center;
 }
 
-.tutorial-endereco .titulo {
-  font-size: 1.1rem;
+.titulo-endereco {
+  font-size: 1.05rem;
   font-weight: 600;
-  text-align: center;
+  color: var(--text);
 }
 
-.tutorial-endereco .subtitulo {
-  text-align: center;
+.subtitulo-endereco {
   margin-top: 8px;
+  font-size: 0.95rem;
+  color: #666;
 }
 
-.endereco-box {
+.box-endereco {
+  margin-top: 18px;
   background: #f6f1e7;
+  padding: 22px;
+  border-radius: 14px;
   border-left: 6px solid #c9b08a;
-  padding: 18px;
-  border-radius: 12px;
-  text-align: center;
-  margin-top: 15px;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 1rem;
 }
 
 .tutorial-passos h2 {
