@@ -361,3 +361,61 @@ footer {
     font-size: 2rem;
   }
 }
+
+.tutorial-presente {
+  max-width: 900px;
+  margin: 60px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.tutorial-endereco .titulo {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.tutorial-endereco .subtitulo {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.endereco-box {
+  background: #f6f1e7;
+  border-left: 6px solid #c9b08a;
+  padding: 18px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+.tutorial-passos h2 {
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.tutorial-passos .alerta {
+  color: red;
+  margin-left: 5px;
+}
+
+.tutorial-passos p {
+  text-align: center;
+  max-width: 700px;
+  margin: 10px auto;
+  line-height: 1.6;
+}
+
+.tutorial-imagem {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.tutorial-imagem img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
