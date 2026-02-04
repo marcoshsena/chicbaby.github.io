@@ -376,39 +376,57 @@ footer {
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
 
+/* ===============================
+   BLOCO ENDEREÇO DE ENTREGA
+=============================== */
+
+.endereco-entrega {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px 20px;
+  text-align: center;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
 .titulo-endereco {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--text);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 4px;
 }
 
 .subtitulo-endereco {
-  margin-top: 6px;
   font-size: 0.95rem;
-  color: #6b7a90;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 14px;
 }
 
 /* Caixa do endereço */
 .box-endereco {
-  margin-top: 20px;
   background: linear-gradient(
     135deg,
     rgba(123,182,217,0.12),
     rgba(246,193,204,0.18)
   );
-  padding: 22px 18px;
+  padding: 18px 16px;
   border-radius: 16px;
   border-left: 6px solid var(--primary);
-  line-height: 1.7;
-  font-size: 1rem;
-  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #000;
+  line-height: 1.35; /* 🔥 linhas mais juntas */
 }
 
-/* Rua em destaque */
+/* Rua */
 .box-endereco strong {
   display: block;
-  font-size: 1.05rem;
-  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 2px;
 }
 
 .tutorial-passos h2 {
