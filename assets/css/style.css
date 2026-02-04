@@ -362,11 +362,18 @@ footer {
   }
 }
 
+/* ===============================
+   BLOCO ENDEREÇO DE ENTREGA
+=============================== */
+
 .endereco-entrega {
   max-width: 900px;
   margin: 40px auto;
   padding: 30px 20px;
   text-align: center;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
 
 .titulo-endereco {
@@ -376,19 +383,32 @@ footer {
 }
 
 .subtitulo-endereco {
-  margin-top: 8px;
+  margin-top: 6px;
   font-size: 0.95rem;
-  color: #666;
+  color: #6b7a90;
 }
 
+/* Caixa do endereço */
 .box-endereco {
-  margin-top: 18px;
-  background: #f6f1e7;
-  padding: 22px;
-  border-radius: 14px;
-  border-left: 6px solid #c9b08a;
+  margin-top: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(123,182,217,0.12),
+    rgba(246,193,204,0.18)
+  );
+  padding: 22px 18px;
+  border-radius: 16px;
+  border-left: 6px solid var(--primary);
   line-height: 1.7;
   font-size: 1rem;
+  color: var(--text);
+}
+
+/* Rua em destaque */
+.box-endereco strong {
+  display: block;
+  font-size: 1.05rem;
+  color: var(--primary);
 }
 
 .tutorial-passos h2 {
