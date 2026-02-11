@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const MAX_POR_TAMANHO = {
-    RN: 8,
+    RN: 4,
     P: 12,
     M: 35,
     G: 40,
