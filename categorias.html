@@ -1,48 +1,769 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Categorias</title>
-  <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#f8f5f7; }
-    header { background:#ffcee0; padding:20px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
-    header a { text-decoration:none; color:#333; }
-    nav a { margin:0 10px; text-decoration:none; color:#333; font-weight:bold; }
-    h1 { margin:0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categorias • Chá do Francisco</title>
 
-    main { padding:40px 20px; max-width:800px; margin:auto; }
-    ul { list-style:none; padding:0; }
-    li { padding:15px 20px; background:white; border-radius:12px; margin:10px 0; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-    li a { text-decoration:none; color:#333; font-size:18px; display:block; }
+  <link rel="stylesheet" href="assets/css/style.css">
 
-    footer { background:#ffcee0; padding:20px; text-align:center; margin-top:40px; }
-  </style>
+  <!-- Firebase (se você quiser manter bloqueio "indisponível" aqui também) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase.js"></script>
+
+  <script src="assets/js/categorias.js" defer></script>
+  <script src="assets/js/compra.js" defer></script>
 </head>
+
 <body>
+  <nav class="topbar">
+    <div class="topbar-container">
+      <a href="index.html" class="logo">ChicBaby</a>
 
-<header>
-  <h1><a href="index.html">ChicBaby - Chá de Bebê</a></h1>
-  <nav>
-      <a href="lista.html">Lista</a>
-      <a href="categorias.html">Categorias</a>
+      <ul class="menu">
+        <li><a href="index.html">Início</a></li>
+      </ul>
+    </div>
   </nav>
-</header>
 
-<main>
-  <h2>Categorias de Produtos</h2>
-  <ul>
-    <li><a href="higiene.html">Higiene</a></li>
-    <li><a href="roupas.html">Roupas</a></li>
-    <li><a href="alimentacao.html">Alimentação</a></li>
-    <li><a href="quarto.html">Quarto do Bebê</a></li>
-  </ul>
-</main>
+  <header>
+    <h1>Categorias</h1>
+    <p>Escolha uma categoria para ver os itens disponíveis 💙</p>
+  </header>
 
-<footer>
-  © 2025 ChicBaby - Chá de Bebê
-</footer>
+  <main>
+
+    <!-- Lista de categorias (gerada pelo JS) -->
+    <section>
+      <h2>🗂️ Categorias</h2>
+      <div id="categoriasLista" class="categorias-lista"></div>
+    </section>
+
+    <!-- Conteúdo (accordion) -->
+    <section>
+      <h2>🍼 Itens por categoria</h2>
+      <div id="categoriasAccordion" class="categorias-accordion"></div>
+    </section>
+
+    <!-- ✅ Você cola AQUI os cards de produto (uma única vez).
+         Eles ficam ocultos e o JS reaproveita para montar por categoria. -->
+    <section style="display:none;">
+      <div id="todosProdutos">
+
+        <!-- CARD PRODUTO -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="produto-de-banho"
+             data-id="sabonete-liquido-infantil"
+             data-nome="Mustela Gel Lavante Suave 500ml"
+             data-url="https://amzn.to/46rzs2B">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/51YVzVZI1sL._AC_SX679_.jpg" alt="Mustela Gel Lavante Suave 500ml">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Sabonete Líquido Infantil - Mustela Gel Lavante Suave 500ml</h3>
+            <p>Lava suavemente, protege a pele e deixa Chico cheirosinho!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+    
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="higiene"
+             data-id="bepantol-baby"
+             data-nome="Bepantol Baby Kit 576 Lenços Umedecidos"
+             data-url="https://amzn.to/4r4Tyba">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/51puCw5iSBL._AC_SX679_.jpg" alt="Bepantol Baby Kit 576 Lenços Umedecidos">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Bepantol Baby - Lenços Umedecidos</h3>
+            <p>Suave e delicado para o bumbum do Chiquinho ficar limpinho!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="higiene"
+             data-id="bepantol-pomada-assadura"
+             data-nome="Cremes Pomada de Assadura Bepantol"
+             data-url="https://amzn.to/4tiUdYq">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/61YTHqyx1EL._AC_SX522_.jpg" alt="Cremes Pomada de Assadura Bepantol">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Cremes Pomada de Assadura Bepantol</h3>
+            <p>Chega de assaduras no bumbum do Chicolino!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="acessorios"
+             data-id="chupeta-avent-philips"
+             data-nome="Chupeta Ultra Soft Unitária Branca Philips Avent"
+             data-url="https://mercadolivre.com/sec/1NHV6Q8">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/51FYftzE13L._AC_SX679_.jpg" alt="Chupeta Ultra Soft Unitária Branca Philips Avent">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Chupeta Ultra Soft Unitária Branca Philips Avent</h3>
+            <p>Nada de dentinhos tronxos!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="acessorios"
+             data-id="baba-eletronica"
+             data-nome="Babá Eletrônica Câmera para Bebês"
+             data-url="https://amzn.to/4bvJxPF">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/61x3NKsvm7L._AC_SX679_.jpg" alt="Babá Eletrônica Câmera para Bebês">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Babá Eletrônica Câmera para Bebês</h3>
+            <p>Devidamente vigiado para não fazer nenhum arte</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="roupinhas"
+             data-id="cueiro-flanelado"
+             data-nome="Cueiro Flanelado Papi Compose"
+             data-url="https://amzn.to/3MkNhsS">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/71dX5PnoHwS._AC_SX522_.jpg" alt="Cueiro Flanelado Papi Compose">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Cueiro Flanelado Papi Compose Estampado</h3>
+            <p>Para o Fancis ficar quentinho e confortável!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+         <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="carrinhos"
+             data-id="carrinho-bebe-burigotto"
+             data-nome="Burigotto Carrinho de Bebê"
+             data-url="https://amzn.to/4kfGcq3">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/71dUWMVi4lL._AC_SY741_.jpg" alt="Burigotto Carrinho de Bebê">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Burigotto Carrinho de Bebê</h3>
+            <p>O Possante de Franccesco!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="brinquedos"
+             data-id="buba-naninha-cachorrinho"
+             data-nome="Buba Naninha Cachorrinho"
+             data-url="https://amzn.to/46cdela">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/51FBl+kOTkL._AC_SX522_.jpg" alt="Buba Naninha Cachorrinho">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Buba Naninha Cachorrinho</h3>
+            <p>A melhor amiga do Bebê! Chiquin vai adorar!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="outros"
+             data-id="kit-baldes"
+             data-nome="Kit 1 Cesto 26l + 2 Baldes 10l Retrátil De Silicone"
+             data-url="https://amzn.to/4taNdMS">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/51Je5snbZvL._AC_SX679_.jpg" alt="Kit 1 Cesto 26l + 2 Baldes 10l Retrátil De Silicone">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Kit 1 Cesto 26l + 2 Baldes 10l Retrátil De Silicone</h3>
+            <p>Para organizar as roupinhas de Fraçois!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="acessorios"
+             data-id="ruido-branco"
+             data-nome="Aparelho de Som Ruído Branco"
+             data-url="https://amzn.to/3LYYUpp">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/51q8+-2DoiL._AC_SY300_SX300_QL70_ML2_.jpg" alt="Aparelho de Som Ruído Branco">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Aparelho de Som Ruído Branco</h3>
+            <p>Nada de Estresse! Aqui é Chico Bento Calminho!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="roupinhas"
+             data-id="macacao-pezinhos-dinosauros"
+             data-nome="Macacão bebê com pezinhos dinossauro - azul | Carter's"
+             data-url="https://www.carters.com.br/produto/macac-o-bebe-com-pezinhos-dinossauro-azul-carter-s-16232470_sku_sku">
+    
+          <div class="card-imagem">
+            <img src="https://static.riachuelo.com.br/RCHLO/16232470002/portrait/3e01c129a93530ec6e6188971f5dd5264847dc98.jpg?imwidth=600" alt="Macacão bebê com pezinhos dinossauro - azul | Carter's">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Macacão bebê com pezinhos dinossauro - azul | Carter's</h3>
+            <p>Chiquitito também quer andar na moda</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="roupinhas"
+             data-id="kit-macacao"
+             data-nome="Kit macacão bebê 2 peças com pezinho urso multicor | Carter's"
+             data-url="https://www.carters.com.br/produto/kit-macac-o-bebe-2-pecas-com-pezinho-urso-multicor-carter-s-16163397_sku_sku">
+    
+          <div class="card-imagem">
+            <img src="https://static.riachuelo.com.br/RCHLO/16163397001/portrait/c69eeddba1d59ce690578462e0a2a058f37b9d59.jpg?imwidth=600" alt="Kit macacão bebê 2 peças com pezinho urso multicor | Carter's">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Kit macacão bebê 2 peças com pezinho urso multicor | Carter's</h3>
+            <p>Frank também quer andar na moda</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="higiene"
+             data-id="kit-granado"
+             data-nome="Granado Kit, Bebê Hora do Banho Tradicional, 250ml"
+             data-url="https://amzn.to/4rLAQ9a">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/61JJdW7eQoL._AC_SX679_.jpg" alt="Granado Kit, Bebê Hora do Banho Tradicional, 250ml">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Granado Kit, Bebê Hora do Banho Tradicional, 250ml</h3>
+            <p>Chikota ficará cheirosinho!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+    <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="higiene"
+             data-id="granado-pele-sensivel"
+             data-nome="Granado Água De Limpeza Bebê, Peles Sensíveis, 500ml"
+             data-url="https://amzn.to/4ciJeYM">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/41rKXuzIhbL._AC_SX679_.jpg" alt="Granado Água De Limpeza Bebê, Peles Sensíveis, 500ml">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Granado Água De Limpeza Bebê, Peles Sensíveis, 500ml</h3>
+            <p>Chiconeiro bem limpinho!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+    <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="higiene"
+             data-id="weleda-babycreme"
+             data-nome="Weleda Babycreme de Calêndula"
+             data-url="https://amzn.to/4bibABn">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/21H5eDLT9RL._AC_.jpg" alt="Weleda Babycreme de Calêndula">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Weleda Babycreme de Calêndula</h3>
+            <p>Nada de assaduras no bumbum de Chicoia!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="carrinhos"
+             data-id="cosco-kids"
+             data-nome="Cosco Kids, Travel System Toffy, Preto Absoluto"
+             data-url="https://amzn.to/3OIrhcm">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/510rpM44zdL._AC_SX522_.jpg" alt="Cosco Kids, Travel System Toffy, Preto Absoluto">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Cosco Kids, Travel System Toffy, Preto Absoluto</h3>
+            <p>A máquina de Chico Sena!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="higiene"
+             data-id="cremer-algodao"
+             data-nome="Cremer Algodão Quadrado Sem Perfume Pacote 100 Unidades"
+             data-url="https://amzn.to/477ZpEN">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/51sHTfXAFsL._AC_SX679_.jpg" alt="Cremer Algodão Quadrado Sem Perfume Pacote 100 Unidades">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Cremer Algodão Quadrado Sem Perfume Pacote 100 Unidades</h3>
+            <p>Para cuidados com Chicoleiro!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- OUTRO CARD -->
+        <div class="card card-produto"
+             data-tipo="produto"
+             data-categoria="higiene"
+             data-id="paninho-de-boca"
+             data-nome="Papi Textil Paninho De Boca Bordados Karinho Estampado"
+             data-url="https://amzn.to/4cIlLAD">
+    
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/61QSJN-fuIL._AC_SX522_.jpg" alt="Papi Textil Paninho De Boca Bordados Karinho Estampado">
+          </div>
+    
+          <div class="card-conteudo">
+            <h3>Papi Textil Paninho De Boca Bordados Karinho Estampado</h3>
+            <p>Chiconha adorará!</p>
+    
+            <button class="btn btn-ver-ofertas">
+              Ver ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="card card-fralda" data-categoria="fralda" data-tamanho="RN">
+          <div class="card-imagem">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_837020-MLA99452042258_112025-F.webp" alt="Huggies">
+          </div>
+
+          <div class="card-conteudo">
+            <h3>Huggies Natural Care</h3>
+
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Natural Care',
+                  tamanho: 'RN',
+                  url: 'https://a.co/d/c32xdYl'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  tamanho: 'RN',
+                  url: 'https://mercadolivre.com/sec/31CMSvi'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="card card-fralda" data-categoria="fralda" data-tamanho="M">
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/61kHj8Jf52L._AC_SX679_PIbundle-112,TopRight,0,0_SH20_.jpg" alt="Huggies">
+          </div>
+
+          <div class="card-conteudo">
+              <h3>Fralda Pampers Pants Ajuste Total</h3>
+
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Pants Ajuste Total Tamanho M',
+                  tamanho: 'M',
+                  url: 'https://amzn.to/3Mk9VS8'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Pants Ajuste Total Tamanho M',
+                  tamanho: 'M',
+                  url: 'https://mercadolivre.com/sec/1cCQ7fu'
+                })">Mercado Livre</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Pants Ajuste Total Tamanho M',
+                  tamanho: 'M',
+                  url: 'https://mercadolivre.com/sec/27roZk8'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="card card-fralda" data-categoria="fralda" data-tamanho="M">
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/512mbN+Sq+L._AC_SX679_.jpg" alt="Babysec">
+          </div>
+
+          <div class="card-conteudo">
+            <h3>Babyse Fralda Premium</h3>
+
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-babysec',
+                  nome: 'Babysec Fralda Premium M',
+                  tamanho: 'M',
+                  url: 'https://amzn.to/4c3sR2j'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-babysec',
+                  nome: 'Babysec Fralda Premium M',
+                  tamanho: 'M',
+                  url: 'https://mercadolivre.com/sec/1NxVwkR'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="card card-fralda" data-categoria="fralda" data-tamanho="M">
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/51sZUgI0nEL._AC_SY300_SX300_QL70_ML2_.jpg" alt="Huggies">
+          </div>
+
+          <div class="card-conteudo">
+            <h3>Huggies Supreme Care</h3>
+
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  tamanho: 'M',
+                  url: 'https://a.co/d/e2vBln4'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  tamanho: 'M',
+                  url: 'https://amzn.to/4bG8KqA'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  tamanho: 'M',
+                  url: 'https://mercadolivre.com/sec/1LFxVbK'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="card card-fralda" data-categoria="fralda" data-tamanho="G">
+          <div class="card-imagem">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_975633-MLA99898042761_112025-F.webp" alt="Pampers">
+          </div>
+
+          <div class="card-conteudo">
+            <h3>Pampers Premium Care</h3>
+
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  tamanho: 'G',
+                  url: 'https://amzn.to/3OBpPZ6'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  tamanho: 'G',
+                  url: 'https://divulgador.magalu.com/K6aNZJAN'
+                })">Magalu</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  tamanho: 'G',
+                  url: 'https://www.mercadolivre.com.br/fralda-pampers-premium-care-tamanho-g-94-unidades/p/MLB48357469?pdp_filters=item_id%3AMLB4039605903#origin=share&sid=share&wid=MLB4039605903'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="card card-fralda" data-categoria="fralda" data-tamanho="G">
+          <div class="card-imagem">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_894848-MLB92252868184_092025-F.webp" alt="Huggies">
+          </div>
+
+          <div class="card-conteudo">
+            <h3>Huggies Supreme Care</h3>
+
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  tamanho: 'G',
+                  url: 'https://amzn.to/3OCpkxV'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  tamanho: 'G',
+                  url: 'https://mercadolivre.com/sec/1D1nRqg'
+                })">Mercado Livre</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  tamanho: 'G',
+                  url: 'https://mercadolivre.com/sec/1gqNfJm'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 7 -->
+        <div class="card card-fralda" data-categoria="fralda" data-tamanho="P">
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/618UVKgOQ1L._AC_SX679_.jpg" alt="Pampers">
+          </div>
+
+          <div class="card-conteudo">
+            <h3>Pampers Premium Care</h3>
+
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  tamanho: 'P',
+                  url: 'https://amzn.to/4ar9gX9'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  tamanho: 'P',
+                  url: 'https://divulgador.magalu.com/gqim3tuV'
+                })">Magalu</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 8 -->
+        <div class="card card-fralda" data-categoria="fralda" data-tamanho="P">
+          <div class="card-imagem">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_994330-MLB81698070105_122024-F.webp" alt="Huggies">
+          </div>
+
+          <div class="card-conteudo">
+            <h3>Huggies Supreme Care</h3>
+
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  tamanho: 'P',
+                  url: 'https://amzn.to/405Dk5T'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  tamanho: 'P',
+                  url: 'https://amzn.to/4auQ1Mz'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-huggies',
+                  nome: 'Fralda Huggies Supreme Care',
+                  tamanho: 'P',
+                  url: 'https://mercadolivre.com/sec/2DenTob'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="card card-fralda" data-categoria="fralda" data-tamanho="RN">
+          <div class="card-imagem">
+            <img src="https://m.media-amazon.com/images/I/61JMOOlw39L._AC_SY300_SX300_QL70_ML2_.jpg" alt="Pampers">
+          </div>
+
+          <div class="card-conteudo">
+            <h3>Pampers Premium Care</h3>
+
+            <div class="botoes">
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  tamanho: 'RN',
+                  url: 'https://amzn.to/4txkFxi'
+                })">Amazon</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  tamanho: 'RN',
+                  url: 'https://mercadolivre.com/sec/1A1V6NS'
+                })">Mercado Livre</button>
+
+              <button class="btn"
+                onclick="comprarProduto({
+                  id: 'fralda-pampers',
+                  nome: 'Fralda Pampers Premium Care',
+                  tamanho: 'RM',
+                  url: 'https://amzn.to/46KhOqW'
+                })">Mercado Livre</button>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Chá de Bebê do Francisco • Feito com carinho</p>
+  </footer>
 
 </body>
 </html>
-
