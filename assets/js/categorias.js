@@ -5,25 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!produtosContainer || !categoriasLista || !categoriasAccordion) return;
 
-  const cards = Array.from(produtosContainer.querySelectorAll('.card[data-tipo="produto"]'));
+  // ✅ Agora pega FRALDAS e PRODUTOS
+  const cards = Array.from(
+    produtosContainer.querySelectorAll('.card[data-tipo]')
+  );
 
-  // Agrupa por categoria
-  const grupos = new Map(); // categoria -> [cards]
+  // Agrupa por categoria (data-categoria). Se não tiver, usa "outros"
+  const grupos = new Map();
   cards.forEach(card => {
     const cat = (card.dataset.categoria || 'outros').trim();
     if (!grupos.has(cat)) grupos.set(cat, []);
     grupos.get(cat).push(card);
   });
 
-  // Helper: nome bonito da categoria
-  const labelCategoria = (cat) => {
-    return cat
-      .replace(/[-_]/g, ' ')
-      .replace(/\b\w/g, c => c.toUpperCase());
-  };
+  const labelCategoria = (cat) =>
+    cat.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 
-  // Renderiza lista de botões de categorias
   const categoriasOrdenadas = Array.from(grupos.keys()).sort((a, b) => a.localeCompare(b));
+
+  // Lista de “chips”
   categoriasOrdenadas.forEach(cat => {
     const btn = document.createElement('button');
     btn.className = 'categoria-chip';
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     categoriasLista.appendChild(btn);
   });
 
-  // Renderiza accordion
+  // Accordion
   categoriasOrdenadas.forEach(cat => {
     const wrapper = document.createElement('div');
     wrapper.className = 'categoria-bloco';
@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.createElement('div');
     grid.className = 'grid';
 
-    // Clona os cards para não “sumir” do container original
     grupos.get(cat).forEach(original => {
       const clone = original.cloneNode(true);
       grid.appendChild(clone);
@@ -67,13 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     header.addEventListener('click', () => {
       const aberto = body.style.display === 'block';
-      document.querySelectorAll('.categoria-body').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.categoria-body').forEach(el => (el.style.display = 'none'));
       body.style.display = aberto ? 'none' : 'block';
       if (!aberto) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
-  // Clique nos "chips" abre a categoria
+  // Chips abrem categoria
   categoriasLista.addEventListener('click', (e) => {
     const chip = e.target.closest('.categoria-chip');
     if (!chip) return;
@@ -85,29 +84,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = bloco.querySelector('.categoria-body');
     if (!body) return;
 
-    document.querySelectorAll('.categoria-body').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.categoria-body').forEach(el => (el.style.display = 'none'));
     body.style.display = 'block';
     bloco.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  // Reusa o mesmo comportamento de "Ver ofertas"
+  // ✅ Clique em "Ver ofertas" (agora funciona para fralda e produto)
   categoriasAccordion.addEventListener('click', (e) => {
     const btn = e.target.closest('.btn-ver-ofertas');
     if (!btn) return;
 
     const card = btn.closest('.card');
-    if (!card) return;
+    if (!card || btn.disabled) return;
 
-    if (btn.disabled) return;
+    const tipo = card.dataset.tipo;
 
-    const { id, nome, url } = card.dataset;
+    // FRALDAS: vai para fraldas.html?tamanho=
+    if (tipo === 'fralda') {
+      const tamanho = card.dataset.tamanho;
+      window.location.href = `fraldas.html?tamanho=${encodeURIComponent(tamanho)}`;
+      return;
+    }
 
-    window.open(url, '_blank', 'noopener,noreferrer');
-    window.location.href = `confirmacao.html?id=${encodeURIComponent(id)}&nome=${encodeURIComponent(nome)}`;
+    // PRODUTO: abre loja e vai para confirmacao.html
+    if (tipo === 'produto') {
+      const { id, nome, url } = card.dataset;
+      window.open(url, '_blank', 'noopener,noreferrer');
+      window.location.href = `confirmacao.html?id=${encodeURIComponent(id)}&nome=${encodeURIComponent(nome)}`;
+    }
   });
 
-  // ✅ Opcional: desativar itens reservados em tempo real (produtos_reservados)
-  // Se não quiser, pode apagar esse bloco.
+  // ✅ Opcional: desativar itens reservados (produtos_reservados) no Firestore
   if (typeof db !== 'undefined') {
     db.collection('produtos_reservados').onSnapshot(snapshot => {
       snapshot.forEach(doc => {
@@ -116,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const produtoId = doc.id;
 
-        // Procura todos os clones na página
         document.querySelectorAll(`.card[data-tipo="produto"][data-id="${produtoId}"]`)
           .forEach(card => {
             const btn = card.querySelector('.btn-ver-ofertas');
