@@ -3,115 +3,126 @@
 // ===============================
 
 const MAX_POR_TAMANHO = {
-  RN: 8,
+  RN: 6,
   P: 12,
   M: 35,
   G: 40,
   GG: 30
 };
 
-// Torna as funções globais (necessário para onclick)
+function getParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    tamanho: params.get('tamanho'),
+    produtoId: params.get('id'),
+    produtoNome: params.get('nome')
+  };
+}
+
+// Mostrar nome do produto na tela (opcional)
+document.addEventListener('DOMContentLoaded', () => {
+  const { produtoNome, tamanho } = getParams();
+  const el = document.getElementById('produtoNome');
+  if (el) {
+    el.textContent = produtoNome ? `${produtoNome}${tamanho ? ` (tamanho ${tamanho})` : ''}` : '';
+  }
+});
+
+// Necessário para onclick=""
 window.respondeSim = function () {
   const form = document.getElementById('formMsg');
   if (!form) return;
 
   form.style.display = 'flex';
-
-  setTimeout(() => {
-    form.classList.add('show');
-  }, 10);
+  setTimeout(() => form.classList.add('show'), 10);
 };
 
 window.respondeNao = function () {
   window.location.href = 'index.html';
 };
 
+window.voltarInicio = function () {
+  window.location.href = 'index.html';
+};
+
 window.enviarMensagem = async function () {
-  const nome = document.getElementById('nomePessoa').value.trim();
-  const msg = document.getElementById('mensagemBebe').value.trim();
+  const nome = document.getElementById('nomePessoa')?.value.trim();
+  const msg = document.getElementById('mensagemBebe')?.value.trim();
 
   if (!nome || !msg) {
     alert('Por favor, preencha seu nome e a mensagem 💙');
     return;
   }
 
-  const params = new URLSearchParams(window.location.search);
-
-  const tamanho = params.get('tamanho');      // fraldas
-  const produtoId = params.get('id');         // produtos normais
-  const produtoNome = params.get('nome');
+  const { tamanho, produtoId, produtoNome } = getParams();
 
   try {
-    // 🔹 1. Salva mensagem (para fralda OU produto)
+    // 1) Salva mensagem (serve pra fralda e produto)
     await db.collection('mensagens').add({
       nome,
       mensagem: msg,
-      tamanho: tamanho || null,
       produtoId: produtoId || null,
       produto: produtoNome || null,
+      tamanho: tamanho || null,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
 
-    // 🔹 Se for produto normal (não fralda)
-    if (!tamanho && produtoId) {
-      await db
-        .collection('produtos_reservados')
-        .doc(produtoId)
-        .set({
-          reservado: true,
-          nome: produtoNome,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-    }
-
-    // 🔹 2. Se for fralda, incrementa progresso com limite
-    if (tamanho && MAX_POR_TAMANHO[tamanho]) {
-      const ref = db.collection('fraldas_progresso').doc(tamanho);
+    // 2) Se for fralda: incrementa com limite
+    if (tamanho) {
       const max = MAX_POR_TAMANHO[tamanho];
+
+      if (!max) {
+        alert('Tamanho inválido 😢');
+        return;
+      }
+
+      const ref = db.collection('fraldas_progresso').doc(tamanho);
 
       await db.runTransaction(async (transaction) => {
         const doc = await transaction.get(ref);
-        const atual = doc.exists ? doc.data().quantidade || 0 : 0;
+        const atual = doc.exists ? (doc.data().quantidade || 0) : 0;
 
-        // ⛔ Bloqueia se atingir o máximo
         if (atual >= max) {
-          throw new Error('LIMITE_ATINGIDO');
+          throw new Error('MAX_ATINGIDO');
         }
 
-        transaction.set(
-          ref,
-          { quantidade: atual + 1 },
+        transaction.set(ref, { quantidade: atual + 1 }, { merge: true });
+      });
+    } else {
+      // 3) Se NÃO for fralda: marca produto como indisponível
+      if (produtoId) {
+        await db.collection('produtos_status').doc(produtoId).set(
+          {
+            disponivel: false,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          },
           { merge: true }
         );
-      });
+      }
     }
 
-    // 🔹 3. Feedback visual
+    // UI sucesso
     const form = document.getElementById('formMsg');
     const agradecimento = document.getElementById('agradecimento');
 
-    form.classList.remove('show');
+    if (form) form.classList.remove('show');
 
     setTimeout(() => {
-      form.style.display = 'none';
-      agradecimento.style.display = 'block';
-
-      setTimeout(() => {
-        agradecimento.classList.add('show');
-      }, 10);
+      if (form) form.style.display = 'none';
+      if (agradecimento) {
+        agradecimento.style.display = 'block';
+        setTimeout(() => agradecimento.classList.add('show'), 10);
+      }
     }, 300);
 
   } catch (err) {
     console.error('Erro ao salvar:', err);
 
-    if (err.message === 'LIMITE_ATINGIDO') {
-      alert('Esse tamanho de fralda já atingiu a quantidade máxima 💙');
-    } else {
-      alert('Erro ao enviar mensagem 😢');
+    if ((err && err.message) === 'MAX_ATINGIDO') {
+      alert('Esse tamanho já atingiu a quantidade máxima 💙');
+      return;
     }
-  }
-};
 
-window.voltarInicio = function () {
-  window.location.href = 'index.html';
+    alert('Erro ao enviar mensagem 😢');
+  }
 };
